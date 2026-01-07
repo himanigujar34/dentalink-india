@@ -9,11 +9,15 @@ import {
   Menu,
   X,
   Stethoscope,
+  ShoppingCart,
+  BookOpen,
 } from "lucide-react";
 
 const navItems = [
   { label: "Home", path: "/dashboard", icon: Home },
   { label: "Find Work", path: "/find-work", icon: Briefcase },
+  { label: "Marketplace", path: "/marketplace", icon: ShoppingCart },
+  { label: "Blog", path: "/blog", icon: BookOpen },
   { label: "My Portfolio", path: "/portfolio", icon: FolderOpen },
   { label: "Messages", path: "/messages", icon: MessageCircle },
 ];

@@ -8,6 +8,7 @@ import {
   Stethoscope,
   Building2,
   Users,
+  Package,
   Eye,
   EyeOff,
   ArrowLeft,
@@ -17,7 +18,7 @@ import {
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
-type UserType = "professional" | "clinic";
+type UserType = "professional" | "clinic" | "distributor";
 
 export default function Auth() {
   const [searchParams] = useSearchParams();
@@ -40,6 +41,8 @@ export default function Auth() {
   const [fullName, setFullName] = useState("");
   const [dciNumber, setDciNumber] = useState("");
   const [clinicName, setClinicName] = useState("");
+  const [companyName, setCompanyName] = useState("");
+  const [gstNumber, setGstNumber] = useState("");
 
   useEffect(() => {
     // Check if user is already logged in
@@ -82,6 +85,8 @@ export default function Auth() {
               user_type: userType,
               dci_number: userType === "professional" ? dciNumber : null,
               clinic_name: userType === "clinic" ? clinicName : null,
+              company_name: userType === "distributor" ? companyName : null,
+              gst_number: userType === "distributor" ? gstNumber : null,
             },
           },
         });
@@ -155,11 +160,11 @@ export default function Auth() {
                 <RadioGroup
                   value={userType}
                   onValueChange={(value) => setUserType(value as UserType)}
-                  className="grid grid-cols-2 gap-4"
+                  className="grid grid-cols-3 gap-3"
                 >
                   <Label
                     htmlFor="professional"
-                    className={`flex flex-col items-center gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all ${
+                    className={`flex flex-col items-center gap-2 p-3 rounded-xl border-2 cursor-pointer transition-all ${
                       userType === "professional"
                         ? "border-primary bg-primary/5"
                         : "border-border hover:border-primary/50"
@@ -170,12 +175,12 @@ export default function Auth() {
                       id="professional"
                       className="sr-only"
                     />
-                    <Users className="h-8 w-8 text-primary" />
-                    <span className="font-medium text-sm">Dental Professional</span>
+                    <Users className="h-6 w-6 text-primary" />
+                    <span className="font-medium text-xs text-center">Dental Professional</span>
                   </Label>
                   <Label
                     htmlFor="clinic"
-                    className={`flex flex-col items-center gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all ${
+                    className={`flex flex-col items-center gap-2 p-3 rounded-xl border-2 cursor-pointer transition-all ${
                       userType === "clinic"
                         ? "border-primary bg-primary/5"
                         : "border-border hover:border-primary/50"
@@ -186,8 +191,24 @@ export default function Auth() {
                       id="clinic"
                       className="sr-only"
                     />
-                    <Building2 className="h-8 w-8 text-primary" />
-                    <span className="font-medium text-sm">Clinic Owner</span>
+                    <Building2 className="h-6 w-6 text-primary" />
+                    <span className="font-medium text-xs text-center">Clinic Owner</span>
+                  </Label>
+                  <Label
+                    htmlFor="distributor"
+                    className={`flex flex-col items-center gap-2 p-3 rounded-xl border-2 cursor-pointer transition-all ${
+                      userType === "distributor"
+                        ? "border-primary bg-primary/5"
+                        : "border-border hover:border-primary/50"
+                    }`}
+                  >
+                    <RadioGroupItem
+                      value="distributor"
+                      id="distributor"
+                      className="sr-only"
+                    />
+                    <Package className="h-6 w-6 text-primary" />
+                    <span className="font-medium text-xs text-center">Distributor</span>
                   </Label>
                 </RadioGroup>
               </div>
@@ -209,7 +230,7 @@ export default function Auth() {
                   />
                 </div>
 
-                {userType === "professional" ? (
+                {userType === "professional" && (
                   <div className="space-y-2">
                     <Label htmlFor="dciNumber">DCI Registration Number</Label>
                     <Input
@@ -225,7 +246,9 @@ export default function Auth() {
                       Your profile will show "Pending Verification" until verified.
                     </p>
                   </div>
-                ) : (
+                )}
+                
+                {userType === "clinic" && (
                   <div className="space-y-2">
                     <Label htmlFor="clinicName">Clinic Name</Label>
                     <Input
@@ -238,6 +261,38 @@ export default function Auth() {
                       required
                     />
                   </div>
+                )}
+
+                {userType === "distributor" && (
+                  <>
+                    <div className="space-y-2">
+                      <Label htmlFor="companyName">Company Name</Label>
+                      <Input
+                        id="companyName"
+                        type="text"
+                        value={companyName}
+                        onChange={(e) => setCompanyName(e.target.value)}
+                        placeholder="e.g., MedSupply India Pvt Ltd"
+                        className="input-clinical"
+                        required
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="gstNumber">GST Number</Label>
+                      <Input
+                        id="gstNumber"
+                        type="text"
+                        value={gstNumber}
+                        onChange={(e) => setGstNumber(e.target.value)}
+                        placeholder="e.g., 22AAAAA0000A1Z5"
+                        className="input-clinical"
+                        required
+                      />
+                      <p className="text-xs text-muted-foreground">
+                        Required for selling products on the marketplace.
+                      </p>
+                    </div>
+                  </>
                 )}
               </>
             )}

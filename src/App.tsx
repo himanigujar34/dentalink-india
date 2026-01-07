@@ -9,6 +9,8 @@ import Dashboard from "./pages/Dashboard";
 import FindWork from "./pages/FindWork";
 import Portfolio from "./pages/Portfolio";
 import Messages from "./pages/Messages";
+import Marketplace from "./pages/Marketplace";
+import Blog from "./pages/Blog";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +28,8 @@ const App = () => (
           <Route path="/find-work" element={<FindWork />} />
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/messages" element={<Messages />} />
+          <Route path="/marketplace" element={<Marketplace />} />
+          <Route path="/blog" element={<Blog />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

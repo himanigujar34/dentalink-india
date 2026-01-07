@@ -12,6 +12,9 @@ import {
   ChevronRight,
   ArrowRight,
   Shield,
+  Package,
+  ShoppingCart,
+  BookOpen,
 } from "lucide-react";
 
 const features = [
@@ -26,6 +29,18 @@ const features = [
     title: "Smart Job Matching",
     description:
       "Find opportunities filtered by location, compensation split, and clinic equipment.",
+  },
+  {
+    icon: ShoppingCart,
+    title: "Dental Marketplace",
+    description:
+      "Buy and sell dental supplies from verified distributors at competitive prices.",
+  },
+  {
+    icon: BookOpen,
+    title: "Knowledge Hub",
+    description:
+      "Stay updated with latest advances, clinical tips, and community insights.",
   },
   {
     icon: MessageCircle,
@@ -45,7 +60,7 @@ const stats = [
   { value: "5,000+", label: "Verified Dentists" },
   { value: "1,200+", label: "Partner Clinics" },
   { value: "500+", label: "Monthly Jobs" },
-  { value: "28", label: "States Covered" },
+  { value: "200+", label: "Distributors" },
 ];
 
 export default function Index() {
@@ -123,15 +138,15 @@ export default function Index() {
               and specialists.
             </p>
 
-            {/* Dual Login Entry */}
+            {/* Triple Login Entry */}
             <div
-              className="flex flex-col sm:flex-row gap-4 justify-center pt-4 animate-fade-in"
+              className="flex flex-col sm:flex-row gap-4 justify-center pt-4 animate-fade-in flex-wrap"
               style={{ animationDelay: "0.3s" }}
             >
               <Link to="/auth?mode=signup&type=professional">
                 <Button
                   size="lg"
-                  className="btn-trust w-full sm:w-auto gap-2 text-base px-8 py-6"
+                  className="btn-trust w-full sm:w-auto gap-2 text-base px-6 py-6"
                 >
                   <Users className="h-5 w-5" />
                   I'm a Dental Professional
@@ -142,10 +157,21 @@ export default function Index() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="w-full sm:w-auto gap-2 text-base px-8 py-6 border-2 hover:bg-secondary"
+                  className="w-full sm:w-auto gap-2 text-base px-6 py-6 border-2 hover:bg-secondary"
                 >
                   <Building2 className="h-5 w-5" />
                   I'm a Clinic Owner
+                  <ChevronRight className="h-4 w-4" />
+                </Button>
+              </Link>
+              <Link to="/auth?mode=signup&type=distributor">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="w-full sm:w-auto gap-2 text-base px-6 py-6 border-2 hover:bg-secondary"
+                >
+                  <Package className="h-5 w-5" />
+                  I'm a Distributor
                   <ChevronRight className="h-4 w-4" />
                 </Button>
               </Link>
@@ -189,7 +215,7 @@ export default function Index() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {features.map((feature, index) => {
               const Icon = feature.icon;
               return (
